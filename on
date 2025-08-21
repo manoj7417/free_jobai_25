@@ -1,0 +1,5 @@
+[33m26effac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Update package.json
+[33mb2f7a61[m Add OpenAI back with compatible Zod version - AI features restored
+[33md761e93[m v0.1.1: Force clean deployment - NO OPENAI DEPENDENCIES
+[33m674eb83[m Update package.json
+[33m235adfd[m[33m ([m[1;31morigin/deploy-fix[m[33m, [m[1;32mdeploy-fix[m[33m)[m Force clean Vercel build with explicit npm flags
