@@ -1,7 +1,8 @@
 {
   "name": "demo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "description": "Resume Builder - Clean deployment without OpenAI dependencies",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
