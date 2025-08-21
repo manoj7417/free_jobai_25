@@ -13,5 +13,10 @@
     "app/api/**/*.js": {
       "maxDuration": 30
     }
+  },
+  "build": {
+    "env": {
+      "NPM_FLAGS": "--legacy-peer-deps"
+    }
   }
 }

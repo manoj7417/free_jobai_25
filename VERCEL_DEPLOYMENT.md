@@ -47,14 +47,59 @@ In your Vercel project settings, add the following environment variables:
 ## Common Issues and Solutions
 
 ### Build Errors
-- **ESLint TypeScript errors**: Fixed by adding TypeScript dependency
-- **Environment variable errors**: Ensure all required variables are set in Vercel
-- **MongoDB connection errors**: Verify your MongoDB URI is correct and accessible
+
+#### Dependency Conflicts (Zod/OpenAI)
+- **Issue**: `ERESOLVE could not resolve` error with Zod and OpenAI versions
+- **Solution**: 
+  - Zod version has been downgraded to `^3.23.8` to be compatible with OpenAI
+  - `.npmrc` file configured with `legacy-peer-deps=true`
+  - `vercel.json` includes build environment settings
+
+#### ESLint TypeScript errors
+- **Issue**: TypeScript parser errors during build
+- **Solution**: 
+  - TypeScript dependency added
+  - ESLint configuration updated to disable problematic rules
+
+#### Environment variable errors
+- **Issue**: Missing required environment variables
+- **Solution**: Ensure all required variables are set in Vercel project settings
+
+#### MongoDB connection errors
+- **Issue**: Database connection failures
+- **Solution**: 
+  - Verify MongoDB URI is correct and accessible
+  - Check network access and authentication
 
 ### Runtime Errors
-- **JWT errors**: Ensure JWT_SECRET is set and consistent
-- **Database connection**: Check MongoDB URI and network access
-- **Cookie issues**: Ensure domain settings are correct for production
+
+#### JWT errors
+- **Issue**: JWT_SECRET not configured
+- **Solution**: Ensure JWT_SECRET is set and consistent
+
+#### Database connection
+- **Issue**: MongoDB connection timeouts
+- **Solution**: 
+  - Check MongoDB URI and network access
+  - Verify MongoDB Atlas IP whitelist settings
+
+#### Cookie issues
+- **Issue**: Authentication cookies not working
+- **Solution**: Ensure domain settings are correct for production
+
+## Files Added/Fixed for Deployment
+
+### Configuration Files
+- ✅ `package.json` - Fixed Zod version conflict
+- ✅ `.npmrc` - Added npm configuration for dependency resolution
+- ✅ `vercel.json` - Enhanced Vercel deployment configuration
+- ✅ `next.config.mjs` - Production environment handling
+- ✅ `eslint.config.mjs` - Fixed ESLint rules
+
+### Security Improvements
+- ✅ `lib/auth.js` - Removed hardcoded JWT secrets
+- ✅ `lib/mongodb.js` - Enhanced database connection
+- ✅ API routes - Proper environment variable validation
 
 ## Security Considerations
 
@@ -68,3 +113,12 @@ In your Vercel project settings, add the following environment variables:
 - Check Vercel function logs for API route errors
 - Monitor MongoDB connection status
 - Use Vercel analytics for performance insights
+
+## Troubleshooting Deployment
+
+If you still encounter issues:
+
+1. **Clear Vercel cache**: Go to project settings → General → Clear build cache
+2. **Check build logs**: Look for specific error messages in Vercel build logs
+3. **Verify dependencies**: Ensure all packages are compatible
+4. **Test locally**: Run `npm run build` locally to catch issues early

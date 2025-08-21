@@ -16,6 +16,9 @@ build/
 .env.test.local
 .env.production.local
 
+# Keep .npmrc for deployment configuration
+!.npmrc
+
 # Vercel
 .vercel
 
