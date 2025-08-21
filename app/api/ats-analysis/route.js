@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Only import OpenAI if the API key is configured
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let openai;
 if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your-openai-api-key-here') {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const OpenAI = require('openai');
     openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
