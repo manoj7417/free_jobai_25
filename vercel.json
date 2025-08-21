@@ -16,8 +16,9 @@
   },
   "build": {
     "env": {
-      "NPM_FLAGS": "--legacy-peer-deps --force"
+      "NPM_FLAGS": "--legacy-peer-deps --force --no-optional"
     }
   },
-  "installCommand": "npm install --legacy-peer-deps"
+  "installCommand": "npm install --legacy-peer-deps --force --no-optional",
+  "buildCommand": "npm run build"
 }
