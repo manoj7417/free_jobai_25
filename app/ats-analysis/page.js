@@ -148,6 +148,11 @@ export default function ATSAnalysisPage() {
       "languages",
       "interests",
       "references",
+      "experience",
+      "background",
+      "summary",
+      "profile",
+      "about",
     ];
 
     // Check for resume-specific sections
@@ -155,13 +160,32 @@ export default function ATSAnalysisPage() {
       lowerText.includes(keyword)
     );
 
-    if (!hasResumeSections) {
-      return {
-        isValid: false,
-        error:
-          "This PDF does not appear to be a resume or CV. Please upload a document containing resume content (work experience, education, skills, etc.).",
-      };
+    // If we have resume sections, we're likely good
+    if (hasResumeSections) {
+      return { isValid: true };
     }
+
+    // Additional check for common resume patterns even without explicit section headers
+    const hasResumePatterns = (
+      lowerText.includes("experience") ||
+      lowerText.includes("education") ||
+      lowerText.includes("skills") ||
+      lowerText.includes("phone") ||
+      lowerText.includes("email") ||
+      lowerText.includes("@") ||
+      lowerText.includes("linkedin") ||
+      lowerText.includes("github")
+    );
+
+    if (hasResumePatterns) {
+      return { isValid: true };
+    }
+
+    return {
+      isValid: false,
+      error:
+        "This PDF does not appear to be a resume or CV. Please upload a document containing resume content (work experience, education, skills, etc.).",
+    };
 
     // Check for common non-resume content indicators
     const nonResumeIndicators = [
@@ -169,7 +193,6 @@ export default function ATSAnalysisPage() {
       "chapter",
       "appendix",
       "bibliography",
-      "references",
       "abstract",
       "introduction",
       "methodology",
@@ -192,7 +215,28 @@ export default function ATSAnalysisPage() {
       lowerText.includes(indicator)
     );
 
-    if (hasNonResumeContent) {
+    // Only flag as non-resume if we have multiple strong indicators
+    const strongNonResumeIndicators = [
+      "table of contents",
+      "chapter",
+      "appendix",
+      "bibliography",
+      "abstract",
+      "introduction",
+      "methodology",
+      "conclusion",
+      "research paper",
+      "academic paper",
+      "thesis",
+      "dissertation",
+    ];
+
+    const strongNonResumeCount = strongNonResumeIndicators.filter((indicator) =>
+      lowerText.includes(indicator)
+    ).length;
+
+    // Only reject if we have 2 or more strong non-resume indicators
+    if (strongNonResumeCount >= 2) {
       return {
         isValid: false,
         error:
@@ -204,7 +248,7 @@ export default function ATSAnalysisPage() {
     const wordCount = text
       .split(/\s+/)
       .filter((word) => word.length > 0).length;
-    if (wordCount < 50) {
+    if (wordCount < 30) {
       return {
         isValid: false,
         error:
